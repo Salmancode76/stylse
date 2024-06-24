@@ -39,7 +39,7 @@ func serverHandler(w http.ResponseWriter, r *http.Request) {
 	case "/":
 		form(w, r)
 	case "/ascii-art":
-		if art == "3" {
+		if art == "500" {
 			w.WriteHeader(http.StatusInternalServerError)
 			fmt.Printf("err: %v\n", err)
 			PKG.Errors500(w)
@@ -49,13 +49,13 @@ func serverHandler(w http.ResponseWriter, r *http.Request) {
 		f, err := template.ParseFiles(fileresult)
 
 		if err != nil {
-			fmt.Fprintf(w, "<h1>404</h1><br><h1>ERROR in reading the 404 HTML template</h1>")
+			PKG.Errors500(w)
 			return
 		}
 
-		if art == "w2" {
-			//w.WriteHeader(http.StatusInternalServerError)
-			PKG.Errors500(w)
+		if art == "400" {
+			w.WriteHeader(http.StatusBadRequest)
+			PKG.Errors400(w)
 			return
 		}
 		err = f.ExecuteTemplate(w, "result.html", nil)

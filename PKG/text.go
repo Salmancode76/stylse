@@ -20,7 +20,7 @@ func Text(text string, art string) (string, error) {
 		fileName = ("../banners/thinkertoy.txt")
 	default:
 		// fmt.Println("Wrong banner name !!!!")
-		return "3", nil
+		return "500", nil
 		// link it with strings.go
 	}
 	file, err := os.Open(fileName)
@@ -29,7 +29,7 @@ func Text(text string, art string) (string, error) {
 		// need to change this as breaks code link to text.go
 		// log.Fatal("error reading banner file!!! ", err)
 		fmt.Println("1")
-		return "3", fmt.Errorf("error reading banner file!!! ")
+		return "500", fmt.Errorf("error reading banner file!!! ")
 	}
 	defer file.Close()
 	for i, v := range text {
@@ -45,7 +45,7 @@ func Text(text string, art string) (string, error) {
 				i += 2
 				continue
 			}
-			return "w2", nil
+			return "400", nil
 			// log.Fatal("wrong text entered!!! ", v)
 		}
 	}
