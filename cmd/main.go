@@ -38,7 +38,7 @@ func serverHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.URL.Path {
 	case "/":
 		form(w, r)
-	case "/art":
+	case "/ascii-art":
 		if art == "3" {
 			w.WriteHeader(http.StatusInternalServerError)
 			fmt.Printf("err: %v\n", err)
