@@ -13,23 +13,26 @@ func form(w http.ResponseWriter, r *http.Request) {
 	fileName := filepath.Join("..", "template", "form.html")
 	t, err := template.ParseFiles(fileName)
 	if err != nil {
-
-		fmt.Fprintf(w, "<h1>404</h1><br><h1>ERROR in reading the HTML form</h1>")
+		w.WriteHeader(http.StatusInternalServerError)
+		PKG.Errors500(w)
 		return
 	}
 
 	error := t.ExecuteTemplate(w, "form.html", nil)
 
 	if error != nil {
+		w.WriteHeader(http.StatusInternalServerError)
 		PKG.Errors500(w)
 	}
 }
 
+// running the server handling any errors and sending them to correct status code
 func serverHandler(w http.ResponseWriter, r *http.Request) {
 	//w.WriteHeader(http.StatusOK)
 
 	art, err := PKG.Text(r.FormValue("text"), r.FormValue("art"))
 	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Printf("err: %v\n", err)
 		PKG.Errors500(w)
 		return
@@ -49,6 +52,7 @@ func serverHandler(w http.ResponseWriter, r *http.Request) {
 		f, err := template.ParseFiles(fileresult)
 
 		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
 			PKG.Errors500(w)
 			return
 		}
@@ -87,6 +91,7 @@ func serverHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// running the server
 func main() {
 	http.HandleFunc("/", serverHandler)
 	fmt.Println("Server is running")

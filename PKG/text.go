@@ -5,7 +5,7 @@ import (
 	"os"
 	"strings"
 )
-
+//Handling any errors if file is not present or any erro and sending the correct status
 func Text(text string, art string) (string, error) {
 	fmt.Println(text)
 	fmt.Println(art)
@@ -49,8 +49,8 @@ func Text(text string, art string) (string, error) {
 			// log.Fatal("wrong text entered!!! ", v)
 		}
 	}
-	if len(text) == 0 {
-		return "", nil
+	if len(strings.Trim(text, " ")) == 0 {
+		return "400", nil
 	}
 
 	sections := strings.Split(text, "\\n")
@@ -74,6 +74,5 @@ func Text(text string, art string) (string, error) {
 	}
 
 	// fmt.Println(textArt)
-	fmt.Println("3")
 	return textArt + "</pre>", nil
 }

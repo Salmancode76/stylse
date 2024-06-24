@@ -4,7 +4,7 @@ import (
 	"bufio"
 	"os"
 )
-
+//Taking ASCII from file
 func Strings(fileName *string, l rune, cache *[8]string) {
 
 	file, err := os.Open(*fileName)

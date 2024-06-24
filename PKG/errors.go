@@ -7,6 +7,7 @@ import (
 	"text/template"
 )
 
+// handling 500 errors
 func Errors500(w http.ResponseWriter) {
 	w.WriteHeader(http.StatusInternalServerError)
 	fileNameError := filepath.Join("..", "template", "500.html")
@@ -22,12 +23,13 @@ func Errors500(w http.ResponseWriter) {
 	}
 }
 
+// handling 400 errors
 func Errors400(w http.ResponseWriter) {
 	w.WriteHeader(http.StatusBadRequest)
 	fileNameError := filepath.Join("..", "template", "400.html")
 	t, err := template.ParseFiles(fileNameError)
 	if err != nil {
-		fmt.Fprintf(w, "<h1>500</h1><br><h1>ERROR in reading the 500 HTML template</h1>")
+		fmt.Fprintf(w, "<h1>400</h1><br><h1>ERROR in reading the 400 HTML template</h1>")
 		return
 	}
 
