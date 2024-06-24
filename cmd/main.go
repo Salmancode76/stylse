@@ -26,7 +26,7 @@ func form(w http.ResponseWriter, r *http.Request) {
 }
 
 func serverHandler(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusOK)
+	//w.WriteHeader(http.StatusOK)
 
 	art, err := PKG.Text(r.FormValue("text"), r.FormValue("art"))
 	if err != nil {
@@ -40,6 +40,7 @@ func serverHandler(w http.ResponseWriter, r *http.Request) {
 		form(w, r)
 	case "/art":
 		if art == "3" {
+			w.WriteHeader(http.StatusInternalServerError)
 			fmt.Printf("err: %v\n", err)
 			PKG.Errors500(w)
 			return
@@ -53,6 +54,7 @@ func serverHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		if art == "w2" {
+			w.WriteHeader(http.StatusInternalServerError)
 			PKG.Errors500(w)
 			return
 		}
@@ -61,11 +63,13 @@ func serverHandler(w http.ResponseWriter, r *http.Request) {
 		//fmt.Fprintf(w, r.FormValue("text"))
 		fmt.Fprintf(w, art)
 		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
 			fmt.Printf("err: %v\n", err)
 			PKG.Errors500(w)
 		}
 
 	default:
+		w.WriteHeader(http.StatusNotFound)
 		fileNameError := filepath.Join("..", "template", "404.html")
 		t, err := template.ParseFiles(fileNameError)
 		if err != nil {
@@ -75,6 +79,7 @@ func serverHandler(w http.ResponseWriter, r *http.Request) {
 
 		err = t.ExecuteTemplate(w, "404.html", nil)
 		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
 			fmt.Printf("err: %v\n", err)
 			PKG.Errors500(w)
 		}
