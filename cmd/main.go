@@ -54,7 +54,7 @@ func serverHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		if art == "w2" {
-			w.WriteHeader(http.StatusInternalServerError)
+			//w.WriteHeader(http.StatusInternalServerError)
 			PKG.Errors500(w)
 			return
 		}
